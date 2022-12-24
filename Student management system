@@ -1,0 +1,47 @@
+#include<iostream>
+#include<fstream>
+#define el "\n"
+#define td "\t"
+// Still working on it to imporving it;
+using namespace std;
+class student{
+	int roll_no;
+	string last_name;
+	string first_name;
+	int std;
+	bool enrolled;
+	public:
+	inline void set_data(){
+		cout<<"HEllo!!"<<"\n";
+		cout<<"Enter your Roll number: ";
+		cin>>roll_no;
+		cout<<"Enter your Last Name: ";
+		cin>>last_name;
+		cout<<"Enter your First Name: ";
+		cin>>first_name;
+		cout<<"Enter your the class you'er currently studying: "<<el;
+		cin>>std;
+		cout<<"Are enrolled in our institution: ";
+		cin>>enrolled;
+	}
+	inline void get_data(){
+		cout<<"Your entered info follows -> "<<el<<"Roll No.:"<<td<<roll_no<<el<<"Last Name:"<<td<<last_name<<el<<"First Name:"<<td<<first_name<<el<<"Class:"<<td<<td<<std<<el<<"Enrolled:"<<td<<enrolled<<el<<el;
+	}
+
+};
+int main(){
+	fstream file;
+	student pccoe;
+	pccoe.set_data();
+	//pccoe.get_data();
+	file.open("studentManagement.txt",ios::out);
+	file.write((char*)(&pccoe),sizeof(pccoe));
+	file.close();
+	cout<<"Congrats"<<el;
+	file.open("studentManagement.txt",ios::in);
+	student raed;
+	file.read((char*)(&raed),sizeof(raed));
+	raed.get_data();
+	file.close();
+	return 0;
+}
