@@ -2,7 +2,7 @@
 #include<fstream>
 #define el "\n"
 #define td "\t"
-// Still working on it to imporving it;
+
 using namespace std;
 class student{
 	int roll_no;
@@ -12,7 +12,7 @@ class student{
 	bool enrolled;
 	public:
 	inline void set_data(){
-		cout<<"HEllo!!"<<"\n";
+		cout<<el<<"HEllo!!"<<el<<el;
 		cout<<"Enter your Roll number: ";
 		cin>>roll_no;
 		cout<<"Enter your Last Name: ";
@@ -23,25 +23,54 @@ class student{
 		cin>>std;
 		cout<<"Are enrolled in our institution: ";
 		cin>>enrolled;
+		cout<<el<<el;
 	}
 	inline void get_data(){
 		cout<<"Your entered info follows -> "<<el<<"Roll No.:"<<td<<roll_no<<el<<"Last Name:"<<td<<last_name<<el<<"First Name:"<<td<<first_name<<el<<"Class:"<<td<<td<<std<<el<<"Enrolled:"<<td<<enrolled<<el<<el;
+	}
+	inline int ROLL(){
+		return roll_no;
+	}
+	inline void Search(int i){
+		fstream fout;
+		fout.open("studentManagement.txt",ios::out|ios::in);
+		student READ[i];
+		fout.read((char*)(&READ[i]),sizeof(READ[i]));
+		int r,flag = 0;
+		cout<<"Enter Roll no. to search: ";
+		cin>>r;
+		while(i--){
+			if(r == READ[i].ROLL()){
+				flag = 1;
+				break;
+			}
+			(flag == 1) ? (cout<<"Matched found!!"<<"\n") : (cout<<"Matched not found!!"<<"\n");
+			fout.close();
+		}
 	}
 
 };
 int main(){
 	fstream file;
-	student pccoe;
-	pccoe.set_data();
+	int i;
+	cout<<"Enter no. of data to be entered in file: ";
+	cin>>i;
+	student pccoe[i],c;
+	student READ[i];
+	for(int j = 0;j<i;i++){
+		pccoe[i].set_data();
+	}
 	//pccoe.get_data();
-	file.open("studentManagement.txt",ios::out);
-	file.write((char*)(&pccoe),sizeof(pccoe));
+	file.open("studentManagement.txt",ios::out|ios::in);
+	file.write((char*)(&pccoe[i]),sizeof(pccoe[i]));
 	file.close();
-	cout<<"Congrats"<<el;
-	file.open("studentManagement.txt",ios::in);
-	student raed;
-	file.read((char*)(&raed),sizeof(raed));
-	raed.get_data();
+	file.open("studentManagement.txt",ios::in|ios::out);
+	file.read((char*)(&READ[i]),sizeof(READ[i]));
+	for(int j = 0;j<i;i++){
+		READ[i].get_data();
+	}
 	file.close();
+	c.Search(i);
+
 	return 0;
 }
